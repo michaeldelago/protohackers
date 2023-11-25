@@ -7,7 +7,7 @@
             :appenders ((this-console :layout :json))))
 
 (defun handle-connection (connection)
-  (log4cl-extras/context:with-fields (:peer (format nil "~a:~a" (usocket:host-to-hostname usocket:*remote-host*) usocket:*remote-port*))
+  (log4cl-extras/context:with-fields (:peer `(:address ,(usocket:host-to-hostname usocket:*remote-host*) :port ,usocket:*remote-port*))
     (handler-bind ((error
                      (lambda (c)
                        (log:warn "Client handler error: ~A~%" c)
